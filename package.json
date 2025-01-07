@@ -1,6 +1,6 @@
 {
-  "name": "@crypto/coin",
-  "author": "abdulhussain156",
+  "name": "@my/coin-react",
+  "author": "coin.cc",
   "version": "3.3.0",
   "description": "Javascript Version",
   "private": true,

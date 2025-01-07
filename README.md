@@ -14,7 +14,7 @@ npm i --legacy-peer-deps
 
 ```
 Copy .env.example
-and rename it as
+and rename it as 
 .env
 add Links to API
 ```
@@ -33,15 +33,7 @@ or
 yarn start
 ```
 
-## 3.Test
-
-```sh
-npm test
-or
-yarn test
-```
-
-## 4.Build
+## 3.Build
 
 ```sh
 npm run build or yarn build
