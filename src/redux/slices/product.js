@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { API_KEY } from 'src/config';
 import axios from '../../utils/axios';
 //
 import { dispatch } from '../store';
-import { API_KEY } from 'src/config';
-
 // ----------------------------------------------------------------------
 
 const initialState = {
@@ -100,8 +99,6 @@ export function getCoin(name) {
 export function getChartData(name, date) {
   return async () => {
     dispatch(slice.actions.startChartLoading());
-    const now = Math.floor(Date.now() / 1000); // Current time in seconds
-    const oneHourAgo = now - 3600;
     try {
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${name}/market_chart?days=${date}&vs_currency=usd&x_cg_demo_api_key=${API_KEY}`

@@ -2,7 +2,7 @@
 // ----------------------------------------------------------------------
 
 export const HOST_API = process.env.REACT_APP_HOST_API_KEY || '';
-export const API_KEY = process.env.API_KEY || '';
+export const API_KEY = process.env.REACT_APP_HOST_SECRET_KEY || '';
 
 // LAYOUT
 // ----------------------------------------------------------------------
