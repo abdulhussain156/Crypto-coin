@@ -53,6 +53,7 @@ export default function ProductTableRow({ row, selected, onEditRow, onSelectRow,
     price_change_percentage_24h,
     sparkline_in_7d,
     price_change_percentage_1h_in_currency,
+    total_volume,
   } = row;
 
   const result = checkAndFormatChange(price_change_percentage_24h);
@@ -116,7 +117,7 @@ export default function ProductTableRow({ row, selected, onEditRow, onSelectRow,
         </Stack>
       </TableCell>
 
-      <TableCell align="right">{fCurrency(market_cap_change_24h)}</TableCell>
+      <TableCell align="right">{fCurrency(total_volume)}</TableCell>
       <TableCell align="right">{fCurrency(market_cap)}</TableCell>
 
       <TableCell align="right">
