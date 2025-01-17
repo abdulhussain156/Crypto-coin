@@ -20,6 +20,7 @@ import {
   Divider,
   Stack,
   Pagination,
+  Grid,
 } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
@@ -37,6 +38,7 @@ import { TableNoData, TableSkeleton, TableSelectedActions, TableHeadCustom } fro
 // sections
 import { ProductTableRow, ProductTableToolbar } from '../../sections/@dashboard/e-commerce/product-list';
 import useTabs from 'src/hooks/useTabs';
+import Favourites from 'src/sections/@dashboard/e-commerce/fave/Favourites';
 
 // ----------------------------------------------------------------------
 
@@ -90,7 +92,7 @@ export default function CoinsList() {
 
   const dispatch = useDispatch();
 
-  const { products, isLoading } = useSelector((state) => state.product);
+  const { products, isLoading, error, favourites } = useSelector((state) => state.product);
 
   const [tableData, setTableData] = useState([]);
 
@@ -155,12 +157,24 @@ export default function CoinsList() {
   ];
 
   const handlePageChange = (event, newPage) => {
-    setPage(newPage); // Set the new page
+    setPage(newPage);
   };
 
   return (
     <Page title="Coins List">
       <Container maxWidth="lg" sx={{ mt: 15 }}>
+        {/* cards go here */}
+        <Grid container spacing={1} mb={2}>
+          {favourites.length > 0 &&
+            favourites.map((fav, index) => {
+              return (
+                <Grid item xs={6} md={2} key={index}>
+                  <Favourites item={fav} />
+                </Grid>
+              );
+            })}
+        </Grid>
+
         <Card>
           <Tabs
             allowScrollButtonsMobile

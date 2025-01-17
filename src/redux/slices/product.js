@@ -11,6 +11,7 @@ const initialState = {
   isChartLoading: false,
   error: null,
   products: [],
+  favourites: [],
   chartData: null,
   reset: false,
   product: null,
@@ -24,6 +25,19 @@ const slice = createSlice({
     // START LOADING
     startLoading(state) {
       state.isLoading = true;
+    },
+
+    addToFavourites(state, action) {
+      // console.log(action.payload);
+      const findValue = state.favourites.find((item) => item.id === action.payload.id);
+      const newValue = !findValue ? [...state.favourites, action.payload] : state.favourites;
+      state.favourites = newValue;
+    },
+
+    removeFromFavourites(state, action) {
+      // console.log(action.payload);
+      const newFavourites = state.favourites.filter((item) => item.id !== action.payload.id);
+      state.favourites = newFavourites;
     },
 
     // START LOADING
@@ -61,7 +75,7 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Actions
-export const { getProductsSuccess, getChartSuccess } = slice.actions;
+export const { getProductsSuccess, getChartSuccess, addToFavourites } = slice.actions;
 
 // ----------------------------------------------------------------------
 
@@ -79,6 +93,18 @@ export function getProducts(page = 1) {
   };
 }
 
+export function addToFavouritesList(item) {
+  return async (dispatch) => {
+    dispatch(slice.actions.addToFavourites(item));
+  };
+}
+
+export function removeFromFavouritesList(item) {
+  return async (dispatch) => {
+    dispatch(slice.actions.removeFromFavourites(item));
+  };
+}
+
 // ----------------------------------------------------------------------
 
 export function getCoin(name) {
@@ -88,7 +114,6 @@ export function getCoin(name) {
       const response = await axios.get(`/api/v3/coins/${name}?x_cg_demo_api_key=${API_KEY}`);
       dispatch(slice.actions.getProductSuccess(response.data));
     } catch (error) {
-      console.error(error);
       dispatch(slice.actions.hasError(error));
     }
   };

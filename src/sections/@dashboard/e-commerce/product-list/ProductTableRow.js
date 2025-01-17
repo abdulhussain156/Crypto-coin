@@ -11,8 +11,9 @@ import Image from '../../../../components/Image';
 import Iconify from '../../../../components/Iconify';
 //
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PATH_DASHBOARD } from 'src/routes/paths';
+import { addToFavourites, addToFavouritesList, removeFromFavouritesList } from 'src/redux/slices/product';
 // ----------------------------------------------------------------------
 
 function checkAndFormatChange(value) {
@@ -40,6 +41,7 @@ export default function ProductTableRow({ row, selected, onEditRow, onSelectRow,
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { favourites } = useSelector((state) => state.product);
   const {
     market_cap_rank,
     name,
@@ -63,12 +65,28 @@ export default function ProductTableRow({ row, selected, onEditRow, onSelectRow,
     navigate(PATH_DASHBOARD.coins.view(id));
   };
 
+  const addItemtoFavouries = () => {
+    dispatch(addToFavouritesList(row));
+  };
+
+  const handleRemoveFromFavourite = (e) => {
+    dispatch(removeFromFavouritesList(row));
+  };
+
+  const findFavourites = favourites.find((item) => item.id === id);
+
   return (
     <TableRow hover selected={selected}>
       <TableCell padding="checkbox" sx={{ alignItems: 'center' }}>
-        <IconButton>
-          <Iconify icon={'material-symbols-light:star-outline-rounded'} color="grey" width={30} height={30} />
-        </IconButton>
+        {findFavourites ? (
+          <IconButton onClick={handleRemoveFromFavourite}>
+            <Iconify icon={'material-symbols:star'} color="#ffd480" width={30} height={30} />
+          </IconButton>
+        ) : (
+          <IconButton onClick={addItemtoFavouries}>
+            <Iconify icon={'material-symbols-light:star-outline-rounded'} color="grey" width={30} height={30} />
+          </IconButton>
+        )}
       </TableCell>
       <TableCell align="right">{market_cap_rank}</TableCell>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
